@@ -4,6 +4,7 @@ import MaterialTable, { MTableToolbar } from "material-table";
 const BeerList = ({ history }) => {
   const [columns, setColumns] = useState([]);
   const [data, setData] = useState([]);
+  //pr test;
   useEffect(() => {
     fetch("https://api.punkapi.com/v2/beers")
       .then((res) => res.json())
