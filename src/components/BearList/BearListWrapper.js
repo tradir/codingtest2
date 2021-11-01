@@ -20,7 +20,11 @@ import {
   ViewColumn,
 } from '@material-ui/icons'
 import { Container, Wrapper } from './StyledBearList'
-import { TextField } from '@material-ui/core'
+import { useDispatch } from 'react-redux'
+import { ADD_BEER_REQUEST } from '../../reducers/cart'
+import { useSelector } from 'react-redux'
+import { useCallback } from 'react'
+import { addCart } from '../../reducers/cart'
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -47,11 +51,17 @@ const tableIcons = {
 }
 
 const BearListWrapper = () => {
-  const [bearList, setBearList] = useState([])
+  const dispatch = useDispatch()
+  const [beerList, setBeerList] = useState([])
   const [filter, setFilter] = useState(null)
 
+  const addBeer = useCallback((data) => {
+    console.log(1)
+    dispatch(addCart(data))
+  }, [])
+
   useEffect(() => {
-    axios
+    return axios
       .get(`https://api.punkapi.com/v2/beers`)
       .then((res) => {
         const data = res.data.map((list) => {
@@ -70,171 +80,193 @@ const BearListWrapper = () => {
 
           return data
         })
-        setBearList(data)
+        setBeerList(data)
       })
       .catch((err) => {
         console.log(err)
       })
   }, [])
+
   return (
     <Container>
       <Wrapper>
-        <MaterialTable
-          title="Bear List"
-          columns={[
-            {
-              title: 'Image',
-              field: 'imageUrl',
-              headerStyle: {
-                textAlign: 'center',
-              },
-              cellStyle: {
-                textAlign: 'center',
-              },
-              render: (rowData) => (
-                <img
-                  src={rowData.imageUrl}
-                  style={{
-                    height: 40,
-                  }}
-                />
-              ),
-            },
-            {
-              title: 'Name',
-              field: 'name',
-              width: 200,
-              cellStyle: {
-                minWidth: 180,
-                maxWidth: 180,
-              },
-            },
-            {
-              title: 'Tag Line',
-              field: 'tagline',
-              cellStyle: {
-                minWidth: 200,
-                maxWidth: 200,
-              },
-            },
-            {
-              title: 'Abv',
-              field: 'abv',
-              width: 90,
-              type: 'numeric',
-              cellStyle: {
-                textAlign: 'right',
-              },
-            },
-            {
-              title: 'Ibu',
-              field: 'ibu',
-              width: 90,
-              type: 'numeric',
-              cellStyle: {
-                textAlign: 'right',
-              },
-            },
-            {
-              title: 'Srm',
-              field: 'srm',
-              width: 90,
-              type: 'numeric',
-              cellStyle: {
-                textAlign: 'right',
-              },
-            },
-          ]}
-          data={bearList}
-          actions={[
-            {
-              icon: AddBox,
-              iconProps: {
-                style: { width: '90px', fontSize: 'small', color: 'green' },
-              },
-              tooltip: 'Save User',
-              onClick: (event, rowData) => alert('You saved ' + rowData.name),
-            },
-          ]}
-          components={{
-            Action: (props) => (
-              <div
-                style={{
-                  whiteSpace: 'nowrap',
-                  width: '100px',
+        {beerList ? (
+          <MaterialTable
+            title="Bear List"
+            columns={[
+              {
+                title: 'Image',
+                field: 'imageUrl',
+                headerStyle: {
                   textAlign: 'center',
-                }}
-              >
-                <AddBox />
-              </div>
-            ),
-            Toolbar: (props) => (
-              <div>
-                <MTableToolbar {...props} />
-                <div
-                  style={{
-                    padding: '20px',
-                    textAlign: 'left',
-                    display: 'flex',
-                  }}
-                >
+                },
+                cellStyle: {
+                  textAlign: 'center',
+                },
+                render: (rowData) => (
+                  <img
+                    src={rowData.imageUrl}
+                    style={{
+                      height: 40,
+                    }}
+                  />
+                ),
+              },
+              {
+                title: 'Name',
+                field: 'name',
+                width: 200,
+                cellStyle: {
+                  minWidth: 180,
+                  maxWidth: 180,
+                },
+              },
+              {
+                title: 'Tag Line',
+                field: 'tagline',
+                cellStyle: {
+                  minWidth: 200,
+                  maxWidth: 200,
+                },
+              },
+              {
+                title: 'Abv',
+                field: 'abv',
+                width: 90,
+                type: 'numeric',
+                cellStyle: {
+                  textAlign: 'right',
+                },
+              },
+              {
+                title: 'Ibu',
+                field: 'ibu',
+                width: 90,
+                type: 'numeric',
+                cellStyle: {
+                  textAlign: 'right',
+                },
+              },
+              {
+                title: 'Srm',
+                field: 'srm',
+                width: 90,
+                type: 'numeric',
+                cellStyle: {
+                  textAlign: 'right',
+                },
+              },
+            ]}
+            data={beerList}
+            actions={[
+              {
+                icon: AddBox,
+                iconProps: {
+                  style: {
+                    width: '100px',
+                    fontSize: 'small',
+                    color: 'green',
+                    cursor: 'pointer',
+                  },
+                },
+                tooltip: 'Save Beer',
+                onClick: (event, rowData) => {
+                  addBeer(rowData)
+                },
+              },
+            ]}
+            components={{
+              // Action: (props) => (
+              //   <div
+              //     style={{
+              //       whiteSpace: 'nowrap',
+              //       width: '100px',
+              //       textAlign: 'center',
+              //     }}
+              //   >
+              //     <AddBox {...props} />
+              //   </div>
+              // ),
+              Toolbar: (props) => (
+                <div>
+                  <MTableToolbar {...props} />
                   <div
                     style={{
-                      padding: '10px 15px',
-                      borderRadius: '8px',
-                      background: '#efefef',
-                      textAlign: 'center',
-                      margin: '5px',
-                      fontSize: '16px',
+                      padding: '20px',
+                      textAlign: 'left',
+                      display: 'flex',
                     }}
                   >
-                    5 - 6
-                  </div>
-                  <div
-                    style={{
-                      padding: '10px 15px',
-                      borderRadius: '8px',
-                      background: '#efefef',
-                      textAlign: 'center',
-                      margin: '5px',
-                      fontSize: '16px',
-                    }}
-                  >
-                    7 - 8
-                  </div>
-                  <div
-                    style={{
-                      padding: '10px 15px',
-                      borderRadius: '8px',
-                      background: '#efefef',
-                      textAlign: 'center',
-                      margin: '5px',
-                      fontSize: '16px',
-                    }}
-                  >
-                    8 - 9
+                    <div
+                      style={{
+                        padding: '10px 15px',
+                        borderRadius: '8px',
+                        background: '#efefef',
+                        textAlign: 'center',
+                        margin: '5px',
+                        fontSize: '16px',
+                      }}
+                    >
+                      5 - 6
+                    </div>
+                    <div
+                      style={{
+                        padding: '10px 15px',
+                        borderRadius: '8px',
+                        background: '#efefef',
+                        textAlign: 'center',
+                        margin: '5px',
+                        fontSize: '16px',
+                      }}
+                    >
+                      7 - 8
+                    </div>
+                    <div
+                      style={{
+                        padding: '10px 15px',
+                        borderRadius: '8px',
+                        background: '#efefef',
+                        textAlign: 'center',
+                        margin: '5px',
+                        fontSize: '16px',
+                      }}
+                    >
+                      8 - 9
+                    </div>
                   </div>
                 </div>
-              </div>
-            ),
-          }}
-          icons={tableIcons}
-          options={{
-            actionsColumnIndex: -1,
-            sorting: true,
-            pageSize: 10,
-            pageSizeOptions: [10, 20],
-            headerStyle: {
-              backgroundColor: '#01579b',
-              color: '#FFF',
-            },
-          }}
-          localization={{
-            header: {
-              actions: 'add to cart',
-            },
-          }}
-        />
+              ),
+            }}
+            icons={tableIcons}
+            options={{
+              actionsColumnIndex: -1,
+              sorting: true,
+              pageSize: 10,
+              pageSizeOptions: [10, 20],
+              headerStyle: {
+                backgroundColor: '#01579b',
+                color: '#FFF',
+              },
+            }}
+            localization={{
+              pagination: {
+                labelDisplayedRows: '{from}-{to} of {count}',
+              },
+              toolbar: {
+                nRowsSelected: '{0} row(s) selected',
+              },
+              header: {
+                actions: 'Actions',
+              },
+              body: {
+                emptyDataSourceMessage: 'No records to display',
+                filterRow: {
+                  filterTooltip: 'Filter',
+                },
+              },
+            }}
+          />
+        ) : null}
       </Wrapper>
     </Container>
   )
