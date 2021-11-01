@@ -1,10 +1,9 @@
 import React from 'react'
+import BearListWrapper from '../components/BearList/BearListWrapper'
 
 const BearList = () => {
   return (
-    <div>
-      
-    </div>
+    <BearListWrapper />
   )
 }
 
