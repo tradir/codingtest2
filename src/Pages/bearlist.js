@@ -1,6 +1,6 @@
 import React from 'react'
 
-const bearlist = () => {
+const BearList = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const bearlist = () => {
   )
 }
 
-export default bearlist
+export default BearList
