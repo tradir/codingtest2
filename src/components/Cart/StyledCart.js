@@ -35,17 +35,28 @@ export const LiWrapper = styled.li`
   }
 `
 export const BeerLi = styled.div`
-  display: flex;
   min-width: 220px;
   width: 100%;
 `
 
-export const BeerImg = styled.img`
-  width: 70px;
+export const ImgWrapper = styled.div`
+  display: flex;
+  justify-content: center;
   height: 70px;
+  width: 70px;
+  object-fit: original;
   @media screen and (min-width: 600px) {
-    width: 100px;
     height: 100px;
+    width: 100px;
+  }
+`
+
+export const BeerImg = styled.img`
+  /* width: 70px;
+  height: 70px; */
+  @media screen and (min-width: 600px) {
+    height: 100px;
+    object-fit: fill;
   }
 `
 
@@ -55,9 +66,9 @@ export const BeerNameTagContent = styled.div`
   justify-content: center;
   align-items: flex-start;
   margin-left: 10px;
-
   @media screen and (min-width: 600px) {
-    width: 50%;
+    width: 60%;
+    max-width: 450px;
   }
 `
 
@@ -91,7 +102,7 @@ export const BeerAttrWrapper = styled.div`
   align-items: flex-start;
   @media screen and (min-width: 600px) {
     flex-direction: column;
-    width: 80px;
+    width: 20%;
   }
 `
 
@@ -113,9 +124,7 @@ export const Btn = styled.button`
   }
   @media screen and (min-width: 670px) {
     font-size: 15px;
-    width: 80px;
-    height: 50px;
-    margin: 0 10px;
+    width: 100px;
   }
 
   &:hover {
@@ -130,8 +139,8 @@ export const Btn = styled.button`
 export const BtnWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100px;
   @media screen and (min-width: 600px) {
-    flex-direction: row;
   }
 `
 export const AboutP = styled.p`

@@ -1,4 +1,7 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
+import { deleteBeer } from '../../_action/cart_action'
 import {
   Container,
   Wrapper,
@@ -13,30 +16,54 @@ import {
   BeerNameH2,
   BearP,
   BeerAttrWrapper,
+  ImgWrapper,
 } from './StyledCart'
 
 const CartWrapper = () => {
+  const state = useSelector((state) => state.cart)
+  const dispatch = useDispatch()
+  const deleteBeerHandler = (id) => {
+    dispatch(deleteBeer(id))
+    //modal
+  }
+
   return (
     <Container>
       <Wrapper>
         <ListWrapper>
-          <AboutP>총 갯수: </AboutP>
+          <AboutP>총 {state.beerList.length} 개의 맥주 </AboutP>
           <CartUl>
-            <LiWrapper>
-              <BeerImg src="/" alt="beer"></BeerImg>
-              <BeerNameTagContent>
-                <BeerNameH2>Berliner Weisse With Yuzu - B-Sides</BeerNameH2>
-                <BearP>Japanese Citrus Berliner Weisse.</BearP>
-              </BeerNameTagContent>
-              <BeerAttrWrapper>
-                <BearP>ABV : 4.2</BearP>
-                <BearP>IBU : 8</BearP>
-                <BearP>SRM : 4</BearP>
-              </BeerAttrWrapper>
-              <BtnWrapper>
-                <Btn type="button">자세히 보기</Btn>
-              </BtnWrapper>
-            </LiWrapper>
+            {state.beerList &&
+              state.beerList.map((beer) => {
+                return (
+                  <LiWrapper key={beer.id}>
+                    <ImgWrapper>
+                      <BeerImg src={beer.imageUrl} alt="beer"></BeerImg>
+                    </ImgWrapper>
+
+                    <BeerNameTagContent>
+                      <BeerNameH2>{beer.name}</BeerNameH2>
+                      <BearP>{beer.tagline}</BearP>
+                    </BeerNameTagContent>
+                    <BeerAttrWrapper>
+                      <BearP>ABV : {beer.abv}</BearP>
+                      <BearP>IBU : {beer.ibu}</BearP>
+                      <BearP>SRM : {beer.srm}</BearP>
+                    </BeerAttrWrapper>
+                    <BtnWrapper>
+                      <Btn type="button">자세히 보기</Btn>
+                      <Btn
+                        type="button"
+                        onClick={() => {
+                          deleteBeerHandler(beer.id)
+                        }}
+                      >
+                        맥주 삭제
+                      </Btn>
+                    </BtnWrapper>
+                  </LiWrapper>
+                )
+              })}
           </CartUl>
         </ListWrapper>
       </Wrapper>
