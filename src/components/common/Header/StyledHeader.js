@@ -18,9 +18,12 @@ export const Wrapper = styled.div`
   align-items: center;
 `
 export const Logo = styled.h1`
-  font-size: 60px;
   margin: 40px 0 20px 0;
   letter-spacing: -1px;
+  font-size: 48px;
+  @media screen and(min-width: 600px) {
+    font-size: 60px;
+  }
 `
 
 export const BtnWrapper = styled.div`

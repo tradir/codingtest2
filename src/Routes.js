@@ -9,6 +9,7 @@ import Home from './Pages/Home'
 import BearList from './Pages/BearList'
 import Cart from './Pages/Cart'
 import GlobalStyle from './Globalstyle'
+import Footer from './components/common/Footer/Footer'
 // import ReactGA from "react-ga";
 
 const Routes = () => {
@@ -23,6 +24,7 @@ const Routes = () => {
         <Route path="/cart" exact component={Cart} />
         <Route patch="/bearlist" exact component={BearList} />
       </Switch>
+      <Footer />
     </Router>
   )
 }
