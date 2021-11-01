@@ -6,7 +6,7 @@ import {
   Redirect,
 } from 'react-router-dom'
 import Home from './Pages/Home'
-import BearList from './Pages/BearList'
+import BeerList from './Pages/BeerList'
 import Cart from './Pages/Cart'
 import GlobalStyle from './Globalstyle'
 import Footer from './components/common/Footer/Footer'
@@ -22,7 +22,7 @@ const Routes = () => {
         </Route>
         <Route path="/home" component={Home} />
         <Route path="/cart" exact component={Cart} />
-        <Route patch="/bearlist" exact component={BearList} />
+        <Route patch="/bearlist" exact component={BeerList} />
       </Switch>
       <Footer />
     </Router>

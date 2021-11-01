@@ -1,12 +1,12 @@
 import React from 'react'
-import BearListWrapper from '../components/BearList/BearListWrapper'
+import BeerListWrapper from '../components/BeerList/BeerListWrapper'
 import Header from '../components/common/Header/Header'
 
 const BearList = () => {
   return (
     <>
       <Header />
-      <BearListWrapper />
+      <BeerListWrapper />
     </>
   )
 }
