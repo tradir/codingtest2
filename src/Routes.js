@@ -4,6 +4,7 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
+import BeerList from './Pages/BeerList';
 import Home from "./Pages/Home";
 // import ReactGA from "react-ga";
 
@@ -13,6 +14,7 @@ const Routes = () => {
     <Router>
         <Switch>
           <Route path="/home" component={Home} />
+          <Route path="/beerlist" component={BeerList} />
         </Switch>
     </Router>
   );
